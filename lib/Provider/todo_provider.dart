@@ -19,4 +19,23 @@ class TodoProvider extends ChangeNotifier {
     );
     notifyListeners();
   }
+
+  // this function deletes a specific todo
+  /// take the "index" parameter so as to have an identifier
+  /// it also takes build context for managing the current state and navigation
+  void deleteTodo(int index, BuildContext? context){
+    /// search the todo list and find the one at the "index" 
+    /// passed
+    var deleteTodo = _todos.elementAt(index);
+    /// if the search returns a result, then do the following stuff
+    if(deleteTodo != null){
+      _todos.remove(deleteTodo);
+      Navigator.of(context!).pushReplacement(
+      MaterialPageRoute(
+        builder: (context) => const HomeScreen(),
+      ),
+    );
+      notifyListeners();
+    }
+  }
 }
