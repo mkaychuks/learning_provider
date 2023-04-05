@@ -2,21 +2,36 @@ import 'package:flutter/material.dart';
 import 'package:learning_provider/Widgets/custom_button.dart';
 import 'package:learning_provider/Widgets/custom_input.dart';
 
-class CreateTodoScreen extends StatelessWidget {
+class CreateTodoScreen extends StatefulWidget {
   const CreateTodoScreen({super.key});
+
+  @override
+  State<CreateTodoScreen> createState() => _CreateTodoScreenState();
+}
+
+class _CreateTodoScreenState extends State<CreateTodoScreen> {
+  final TextEditingController _todoController = TextEditingController();
+
+  @override
+  void dispose() {
+    super.dispose();
+    _todoController.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:
-          AppBar(elevation: 0, title: const Text("Create Todo"), centerTitle: true),
+      appBar: AppBar(
+          elevation: 0, title: const Text("Create Todo"), centerTitle: true),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
         child: Column(
           children: [
-            customInput(context: context),
-            const SizedBox(height: 20,),
-            customButtion(onPressed: (){}, title: "Submit",context: context)
+            customInput(context: context, controller: _todoController, initialValue: null),
+            const SizedBox(
+              height: 20,
+            ),
+            customButtion(onPressed: () {}, title: "Submit", context: context)
           ],
         ),
       ),
