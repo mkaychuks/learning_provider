@@ -30,9 +30,9 @@ class _CreateTodoScreenState extends State<CreateTodoScreen> {
         child: Column(
           children: [
             customInput(
-                context: context,
-                controller: _todoController,
-                initialValue: null),
+              context: context,
+              controller: _todoController,
+            ),
             const SizedBox(
               height: 20,
             ),
@@ -40,9 +40,7 @@ class _CreateTodoScreenState extends State<CreateTodoScreen> {
               return customButtion(
                 onPressed: () {
                   todoProvider.createTodo(
-                    title: _todoController.text.trim(),
-                    context: context
-                  );
+                      title: _todoController.text.trim(), context: context);
                 },
                 title: "Submit",
                 context: context,

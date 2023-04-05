@@ -1,5 +1,5 @@
 class TodoModel {
-  final String? title;
+  String? title;
 
-  const TodoModel({required this.title});
+  TodoModel({required this.title});
 }

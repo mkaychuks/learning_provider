@@ -51,7 +51,7 @@ class HomeScreen extends StatelessWidget {
                           title: todos[index].title!,
                           onCardTap: () => Navigator.of(context).push(
                             MaterialPageRoute(
-                              builder: (context) => const UpdateTodoScreen(),
+                              builder: (context) => UpdateTodoScreen(todo: todos[index], index: index,),
                             ),
                           ),
                           onDeleteTap: () {

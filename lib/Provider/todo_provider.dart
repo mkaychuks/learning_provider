@@ -3,7 +3,6 @@ import 'package:learning_provider/Models/todo_model.dart';
 import 'package:learning_provider/Screens/home.dart';
 
 class TodoProvider extends ChangeNotifier {
-  
   final List<TodoModel> _todos = [];
 
   List<TodoModel> get todos => _todos;
@@ -12,10 +11,11 @@ class TodoProvider extends ChangeNotifier {
   void createTodo({String? title, BuildContext? context}) {
     var newTodo = TodoModel(title: title);
     _todos.add(newTodo);
-    Navigator.of(context!).pushReplacement(
+    Navigator.of(context!).pushAndRemoveUntil(
       MaterialPageRoute(
         builder: (context) => const HomeScreen(),
       ),
+      (route) => false,
     );
     notifyListeners();
   }
@@ -23,18 +23,34 @@ class TodoProvider extends ChangeNotifier {
   // this function deletes a specific todo
   /// take the "index" parameter so as to have an identifier
   /// it also takes build context for managing the current state and navigation
-  void deleteTodo(int index, BuildContext? context){
-    /// search the todo list and find the one at the "index" 
+  void deleteTodo(int index, BuildContext? context) {
+    /// search the todo list and find the one at the "index"
     /// passed
     var deleteTodo = _todos.elementAt(index);
+
     /// if the search returns a result, then do the following stuff
-    if(deleteTodo != null){
+    if (deleteTodo != null) {
       _todos.remove(deleteTodo);
-      Navigator.of(context!).pushReplacement(
-      MaterialPageRoute(
-        builder: (context) => const HomeScreen(),
-      ),
-    );
+      Navigator.of(context!).pushAndRemoveUntil(
+        MaterialPageRoute(
+          builder: (context) => const HomeScreen(),
+        ),
+        (route) => false,
+      );
+      notifyListeners();
+    }
+  }
+
+  void updateTodo(int index, BuildContext? context, String? newTitle) {
+    var updateTodo = _todos.elementAt(index);
+    if (updateTodo != null) {
+      updateTodo.title = newTitle;
+      Navigator.of(context!).pushAndRemoveUntil(
+        MaterialPageRoute(
+          builder: (context) => const HomeScreen(),
+        ),
+        (route) => false,
+      );
       notifyListeners();
     }
   }
