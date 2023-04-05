@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 
-Widget todoTiles(
-    {String? leading,
-    String? title,
-    void Function()? onDeleteTap,
-    void Function()? onCardTap,
-    BuildContext? context}) {
+Widget todoTiles({
+  String? leading,
+  String? title,
+  void Function()? onDeleteTap,
+  void Function()? onCardTap,
+  BuildContext? context,
+}) {
   return Container(
     width: double.infinity,
     padding: const EdgeInsets.symmetric(vertical: 8),

@@ -1,6 +1,5 @@
 class TodoModel {
-  final String title;
-  final String subtitle;
+  final String? title;
 
-  const TodoModel({required this.title, required this.subtitle});
+  const TodoModel({required this.title});
 }

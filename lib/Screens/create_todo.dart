@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:learning_provider/Provider/todo_provider.dart';
 import 'package:learning_provider/Widgets/custom_button.dart';
 import 'package:learning_provider/Widgets/custom_input.dart';
+import 'package:provider/provider.dart';
 
 class CreateTodoScreen extends StatefulWidget {
   const CreateTodoScreen({super.key});
@@ -27,11 +29,25 @@ class _CreateTodoScreenState extends State<CreateTodoScreen> {
         padding: const EdgeInsets.all(20),
         child: Column(
           children: [
-            customInput(context: context, controller: _todoController, initialValue: null),
+            customInput(
+                context: context,
+                controller: _todoController,
+                initialValue: null),
             const SizedBox(
               height: 20,
             ),
-            customButtion(onPressed: () {}, title: "Submit", context: context)
+            Consumer<TodoProvider>(builder: (context, todoProvider, child) {
+              return customButtion(
+                onPressed: () {
+                  todoProvider.createTodo(
+                    title: _todoController.text.trim(),
+                    context: context
+                  );
+                },
+                title: "Submit",
+                context: context,
+              );
+            })
           ],
         ),
       ),
