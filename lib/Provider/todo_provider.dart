@@ -4,7 +4,7 @@ import 'package:learning_provider/Screens/home.dart';
 
 class TodoProvider extends ChangeNotifier {
   
-  List<TodoModel> _todos = [];
+  final List<TodoModel> _todos = [];
 
   List<TodoModel> get todos => _todos;
 

@@ -39,46 +39,37 @@ class HomeScreen extends StatelessWidget {
                 )
               : SingleChildScrollView(
                   padding: const EdgeInsets.all(20),
-                  child: Column(
-                    children: [
-                      todoTiles(
-                        context: context,
-                        leading: "A",
-                        title: "First todo",
-                        onCardTap: () => Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => const UpdateTodoScreen(),
-                          ),
-                        ),
-                        onDeleteTap: () {
-                          showDialog(
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: todos.length,
+                    itemBuilder: (context, index) {
+                      return Column(
+                        children: [
+                          todoTiles(
                             context: context,
-                            builder: (context) {
-                              return customAlertDialog(
-                                  context: context,
-                                  onYesPressed: () {});
-                            },
-                          );
-                        },
-                      ),
-                      const Divider(),
-                      todoTiles(
-                        context: context,
-                        leading: "B",
-                        title: "Second Todo",
-                        onDeleteTap: () {
-                          showDialog(
-                            context: context,
-                            builder: (context) {
-                              return customAlertDialog(
+                            leading: todos[index].title![0],
+                            title: todos[index].title!,
+                            onCardTap: () => Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => const UpdateTodoScreen(),
+                              ),
+                            ),
+                            onDeleteTap: () {
+                              showDialog(
                                 context: context,
-                                onYesPressed: () {},
+                                builder: (context) {
+                                  return customAlertDialog(
+                                      context: context,
+                                      onYesPressed: () {});
+                                },
                               );
                             },
-                          );
-                        },
-                      )
-                    ],
+                          ),
+                          const SizedBox(height: 8)
+                        ],
+                      );
+                    },
                   ),
                 ),
         );

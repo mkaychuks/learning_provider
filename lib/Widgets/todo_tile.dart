@@ -27,7 +27,6 @@ Widget todoTiles({
             ),
           ),
         ),
-        // Divider()
       ],
     ),
   );
