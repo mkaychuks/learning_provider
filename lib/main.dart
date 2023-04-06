@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:learning_provider/Provider/counter_provider.dart';
-import 'package:learning_provider/home.dart';
+import 'package:learning_provider/Provider/cart_provider.dart';
+import 'package:learning_provider/Screens/home.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -15,13 +15,16 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => CounterProvider(),)
+        ChangeNotifierProvider(create: (context) => CartProvider(),)
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
         theme: ThemeData(
-          primarySwatch: Colors.blue,
+          primarySwatch: Colors.purple,
+          appBarTheme: const AppBarTheme(
+            backgroundColor: Colors.purple
+          )
         ),
         home: const HomeScreen(),
       ),
