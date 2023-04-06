@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:learning_provider/Provider/cart_provider.dart';
+import 'package:learning_provider/Screens/check_out_screen.dart';
 import 'package:learning_provider/Widgets/cart_widget.dart';
 import 'package:learning_provider/Widgets/custom_button.dart';
 import 'package:learning_provider/Widgets/product_tiles.dart';
@@ -7,7 +8,6 @@ import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
-
 
   @override
   Widget build(BuildContext context) {
@@ -37,17 +37,32 @@ class HomeScreen extends StatelessWidget {
                 SizedBox(
                   height: 400,
                   child: ListView.builder(
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: productsList.length,
-                      itemBuilder: (context, index) {
-                        return productTiles(
-                            title: productsList[index].title,
-                            subtitle: productsList[index].price.toString(),
-                            onTap: () {});
-                      }),
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: productsList.length,
+                    itemBuilder: (context, index) {
+                      return productTiles(
+                        title: productsList[index].title,
+                        subtitle: productsList[index].price.toString(),
+                        onTap: () {
+                          cartProvider.addItemToCart(productsList[index]);
+                        },
+                      );
+                    },
+                  ),
                 ),
                 customButton(
-                    onTap: () {}, cartStatus: cartItem.isEmpty ? false : true)
+                  context: context,
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return const CheckOutScreen();
+                        },
+                      ),
+                    );
+                  },
+                  cartStatus: cartItem.isEmpty ? false : true,
+                )
               ],
             ),
           ),

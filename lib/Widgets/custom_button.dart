@@ -8,7 +8,7 @@ Widget customButton({
   return Padding(
     padding: const EdgeInsets.all(12.0),
     child: GestureDetector(
-      onTap: onTap,
+      onTap: cartStatus? onTap : null,
       child: Container(
         width: double.infinity,
         alignment: Alignment.center,
