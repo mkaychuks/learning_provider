@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:learning_provider/Provider/todo_provider.dart';
+import 'package:learning_provider/Provider/cart+provider.dart';
 import 'package:learning_provider/Screens/home.dart';
 import 'package:provider/provider.dart';
 
@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => TodoProvider(),)
+        ChangeNotifierProvider(create: (context) => CartProvider(),)
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
