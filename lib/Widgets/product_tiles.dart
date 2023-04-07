@@ -10,6 +10,6 @@ Widget productTiles({
     leading: const CircleAvatar(),
     title: Text(title),
     subtitle: Text('\$$subtitle'),
-    trailing: GestureDetector(onTap: onTap,child: const Icon(Icons.add_shopping_cart, size: 30,)),
+    trailing: InkWell(onTap: onTap,child: const Icon(Icons.add_shopping_cart, size: 30,)),
   );
 }
