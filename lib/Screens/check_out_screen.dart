@@ -50,16 +50,10 @@ class CheckOutScreen extends StatelessWidget {
                 ),
                 
                 customButton(
-                  title: "Checkout",
+                  title: "Clear Cart",
                   context: context,
                   onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) {
-                          return const CheckOutScreen();
-                        },
-                      ),
-                    );
+                    cartProvider.clearCart();
                   },
                   cartStatus: cartItem.isEmpty ? false : true,
                 )
