@@ -35,7 +35,7 @@ class HomeScreen extends StatelessWidget {
             child: Column(
               children: [
                 SizedBox(
-                  height: 400,
+                  height: 500,
                   child: ListView.builder(
                     physics: const NeverScrollableScrollPhysics(),
                     itemCount: productsList.length,
@@ -51,6 +51,7 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ),
                 customButton(
+                  title: "View Cart",
                   context: context,
                   onTap: () {
                     Navigator.of(context).push(
