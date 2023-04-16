@@ -12,7 +12,6 @@ class UserModel extends ChangeNotifier {
     notifyListeners();
   }
 
-
   void removeUserFromList(User user){
     _users!.remove(user);
     notifyListeners();
