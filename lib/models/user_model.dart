@@ -1,61 +1,129 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
+// To parse this JSON data, do
+//
+//     final user = userFromJson(jsonString);
+
 import 'dart:convert';
 
-class UserModel {
-  String name;
-  String email;
-  String username;
-  UserModel({
-    required this.name,
-    required this.email,
-    required this.username,
-  });
+List<User> userFromJson(String str) => List<User>.from(json.decode(str).map((x) => User.fromJson(x)));
 
-  UserModel copyWith({
-    String? name,
-    String? email,
-    String? username,
-  }) {
-    return UserModel(
-      name: name ?? this.name,
-      email: email ?? this.email,
-      username: username ?? this.username,
+String userToJson(List<User> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+
+class User {
+    User({
+        required this.id,
+        required this.name,
+        required this.username,
+        required this.email,
+        required this.address,
+        required this.phone,
+        required this.website,
+        required this.company,
+    });
+
+    int id;
+    String name;
+    String username;
+    String email;
+    Address address;
+    String phone;
+    String website;
+    Company company;
+
+    factory User.fromJson(Map<String, dynamic> json) => User(
+        id: json["id"],
+        name: json["name"],
+        username: json["username"],
+        email: json["email"],
+        address: Address.fromJson(json["address"]),
+        phone: json["phone"],
+        website: json["website"],
+        company: Company.fromJson(json["company"]),
     );
-  }
 
-  Map<String, dynamic> toMap() {
-    return <String, dynamic>{
-      'name': name,
-      'email': email,
-      'username': username,
+    Map<String, dynamic> toJson() => {
+        "id": id,
+        "name": name,
+        "username": username,
+        "email": email,
+        "address": address.toJson(),
+        "phone": phone,
+        "website": website,
+        "company": company.toJson(),
     };
-  }
+}
 
-  factory UserModel.fromMap(Map<String, dynamic> map) {
-    return UserModel(
-      name: map['name'] as String,
-      email: map['email'] as String,
-      username: map['username'] as String,
+class Address {
+    Address({
+        required this.street,
+        required this.suite,
+        required this.city,
+        required this.zipcode,
+        required this.geo,
+    });
+
+    String street;
+    String suite;
+    String city;
+    String zipcode;
+    Geo geo;
+
+    factory Address.fromJson(Map<String, dynamic> json) => Address(
+        street: json["street"],
+        suite: json["suite"],
+        city: json["city"],
+        zipcode: json["zipcode"],
+        geo: Geo.fromJson(json["geo"]),
     );
-  }
 
-  String toJson() => json.encode(toMap());
+    Map<String, dynamic> toJson() => {
+        "street": street,
+        "suite": suite,
+        "city": city,
+        "zipcode": zipcode,
+        "geo": geo.toJson(),
+    };
+}
 
-  factory UserModel.fromJson(String source) => UserModel.fromMap(json.decode(source) as Map<String, dynamic>);
+class Geo {
+    Geo({
+        required this.lat,
+        required this.lng,
+    });
 
-  @override
-  String toString() => 'UserModel(name: $name, email: $email, username: $username)';
+    String lat;
+    String lng;
 
-  @override
-  bool operator ==(covariant UserModel other) {
-    if (identical(this, other)) return true;
-  
-    return 
-      other.name == name &&
-      other.email == email &&
-      other.username == username;
-  }
+    factory Geo.fromJson(Map<String, dynamic> json) => Geo(
+        lat: json["lat"],
+        lng: json["lng"],
+    );
 
-  @override
-  int get hashCode => name.hashCode ^ email.hashCode ^ username.hashCode;
+    Map<String, dynamic> toJson() => {
+        "lat": lat,
+        "lng": lng,
+    };
+}
+
+class Company {
+    Company({
+        required this.name,
+        required this.catchPhrase,
+        required this.bs,
+    });
+
+    String name;
+    String catchPhrase;
+    String bs;
+
+    factory Company.fromJson(Map<String, dynamic> json) => Company(
+        name: json["name"],
+        catchPhrase: json["catchPhrase"],
+        bs: json["bs"],
+    );
+
+    Map<String, dynamic> toJson() => {
+        "name": name,
+        "catchPhrase": catchPhrase,
+        "bs": bs,
+    };
 }
