@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:learning_provider/provider/users_provider.dart';
-import 'package:provider/provider.dart';
+import 'package:learning_provider/provider/post_provider.dart';
 import 'package:learning_provider/screens/home.dart';
+import 'package:provider/provider.dart';
+// import 'package:learning_provider/screens/home.dart';
 
 void main(List<String> args) {
   return runApp(const MyApp());
@@ -13,12 +14,17 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers:[
-        ChangeNotifierProvider(create: (context) => UserModel(),)
+      providers: [
+        ChangeNotifierProvider(create: (context) => PostProvider()),
       ],
-      child: const MaterialApp(
+      child: MaterialApp(
+        theme: ThemeData(
+          primaryColor: Colors.purple,
+          appBarTheme:
+              const AppBarTheme(elevation: 0, backgroundColor: Colors.purple),
+        ),
         debugShowCheckedModeBanner: false,
-        home: HomeScreen(),
+        home: const HomeScreen(),
       ),
     );
   }
