@@ -16,7 +16,7 @@ class SecondScreen extends StatelessWidget {
               state: data.isChecked!,
               context: context,
               onChanged: (p0) {
-                data.changeState(p0);
+                data.changeState(p0, context);
               },
             );
           }
