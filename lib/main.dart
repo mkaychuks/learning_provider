@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:learning_provider/provider/change_state_notifier.dart';
-import 'package:learning_provider/provider/users_provider.dart';
-import 'package:learning_provider/screens/second_screen.dart';
+import 'package:learning_provider/provider/post_provider.dart';
+import 'package:learning_provider/screens/home.dart';
 import 'package:provider/provider.dart';
 // import 'package:learning_provider/screens/home.dart';
 
@@ -15,13 +14,17 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers:[
-        ChangeNotifierProvider(create: (context) => UserModel(),),
-        ChangeNotifierProvider(create: (context) => CheckBoxChangeNotifier(),),
+      providers: [
+        ChangeNotifierProvider(create: (context) => PostProvider()),
       ],
-      child: const MaterialApp(
+      child: MaterialApp(
+        theme: ThemeData(
+          primaryColor: Colors.purple,
+          appBarTheme:
+              const AppBarTheme(elevation: 0, backgroundColor: Colors.purple),
+        ),
         debugShowCheckedModeBanner: false,
-        home: SecondScreen(),
+        home: const HomeScreen(),
       ),
     );
   }

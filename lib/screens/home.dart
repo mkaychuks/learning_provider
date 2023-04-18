@@ -1,54 +1,57 @@
 import 'package:flutter/material.dart';
-import 'package:learning_provider/provider/users_provider.dart';
-import 'package:learning_provider/services/user_service.dart';
-import 'package:learning_provider/widgets/user_card.dart';
+import 'package:learning_provider/provider/post_provider.dart';
 import 'package:provider/provider.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  @override
-  void initState() {
-    super.initState();
-    Provider.of<UserModel>(context, listen: false).addUsersToList();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    var posts = Provider.of<PostProvider>(context).post;
     return Scaffold(
-      appBar: AppBar(),
-      body: Consumer<UserModel>(builder: (context, value, _) {
-        return FutureBuilder(
-          future: UserService().getallUsers(),
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              return ListView.builder(
-                itemCount: value.users!.length,
-                itemBuilder: (context, index) {
-                  var user = value.users!;
-                  return userCard(
-                    username: user[index].username,
-                    name: user[index].name,
-                    email: user[index].email,
-                    deleteTodo: () {
-                      value.removeUserFromList(user[index]);
+      appBar: AppBar(
+        title: const Text("JSON Post Request"),
+        centerTitle: true,
+      ),
+      body: posts.isEmpty
+          ? Center(
+              child: Consumer<PostProvider>(
+                builder: (context, data, _) {
+                  return ElevatedButton(
+                    onPressed: () {
+                      data.addPost();
                     },
+                    child: Text("Press"),
                   );
                 },
-              );
-            } else {
-              return const Center(
-                child: CircularProgressIndicator(),
+              ),
+            )
+          : Consumer<PostProvider>(
+            builder: (context, data, _) {
+              return RefreshIndicator(
+                onRefresh: () async { 
+                  data.addPost();
+                 },
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                          itemCount: posts.length,
+                          itemBuilder: (context, index) {
+                            return ListTile(
+                              leading: CircleAvatar(child: Text(posts[index].title[0]),),
+                              title: Text(posts[index].title),
+                              subtitle: Text(posts[index].body),
+                            );
+                          },
+                        ),
+                    ),
+                  ],
+                ),
               );
             }
-          },
-        );
-      }),
+          ),
     );
   }
 }
