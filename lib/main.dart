@@ -19,10 +19,10 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         theme: ThemeData(
-          primaryColor: Colors.purple,
-          appBarTheme:
-              const AppBarTheme(elevation: 0, backgroundColor: Colors.purple),
-        ),
+            primaryColor: Colors.purple,
+            appBarTheme:
+                const AppBarTheme(elevation: 0, backgroundColor: Colors.purple),
+            ),
         debugShowCheckedModeBanner: false,
         home: const HomeScreen(),
       ),
