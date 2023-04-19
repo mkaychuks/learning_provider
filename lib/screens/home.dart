@@ -37,7 +37,6 @@ class HomeScreen extends StatelessWidget {
               children: [
                 Expanded(
                   child: ListView.builder(
-                    padding: const EdgeInsets.symmetric(horizontal: 18),
                     shrinkWrap: true,
                     itemCount: posts.length,
                     itemBuilder: (context, index) {
