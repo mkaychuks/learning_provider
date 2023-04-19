@@ -48,19 +48,28 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                 height: 64,
                 child: ElevatedButton(
                   onPressed: () {
-                    data
-                        .addPost(
-                            title: _title.text.trim(),
-                            body: _body.text.trim(),
-                            context: context)
-                        .then(
-                          (value) => Navigator.of(context).pushAndRemoveUntil(
-                            CupertinoPageRoute(
-                              builder: (context) => const HomeScreen(),
+                    if (_title.text.isNotEmpty && _body.text.isNotEmpty) {
+                      data
+                          .addPost(
+                              title: _title.text.trim(),
+                              body: _body.text.trim(),
+                              context: context)
+                          .then(
+                            (value) => Navigator.of(context).pushAndRemoveUntil(
+                              CupertinoPageRoute(
+                                builder: (context) => const HomeScreen(),
+                              ),
+                              (route) => false,
                             ),
-                            (route) => false,
-                          ),
-                        );
+                          );
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          backgroundColor: Colors.purple,
+                          content: Text("Fields must not be empty"),
+                        ),
+                      );
+                    }
                   },
                   style: ElevatedButton.styleFrom(
                       shape: const RoundedRectangleBorder(
