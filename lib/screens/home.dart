@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:learning_provider/provider/weather_provider.dart';
+import 'package:learning_provider/widgets/header.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -22,23 +23,20 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
-      body: Consumer<WeatherProvider>(builder: (context, weatherProvider, _) {
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-          Text('This is the latitude of my phone ${weatherProvider.latitude}'),
-          const SizedBox(
-            height: 40,
-          ),
-          Text(
-              'This is the longitude of my phone ${weatherProvider.longitude}'),
-          const SizedBox(
-            height: 100,
-          ),
-          Text(weatherProvider.city)
-        ]);
-      }),
+      body: SafeArea(
+        child:
+            Consumer<WeatherProvider>(builder: (context, weatherProvider, _) {
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                headerWidget(city: weatherProvider.city),
+              ],
+            ),
+          );
+        }),
+      ),
     );
   }
 }
