@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:learning_provider/provider/weather_provider.dart';
-import 'package:learning_provider/screens/home.dart';
+import 'package:learning_provider/screens/splash_screen.dart';
 import 'package:provider/provider.dart';
 // import 'package:learning_provider/screens/home.dart';
 
@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
                 const AppBarTheme(elevation: 0, backgroundColor: Colors.purple),
             ),
         debugShowCheckedModeBanner: false,
-        home: const HomeScreen(),
+        home: const SplashScreen(),
       ),
     );
   }
