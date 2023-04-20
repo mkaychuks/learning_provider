@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:learning_provider/provider/post_provider.dart';
+import 'package:learning_provider/provider/weather_provider.dart';
 import 'package:learning_provider/screens/home.dart';
 import 'package:provider/provider.dart';
 // import 'package:learning_provider/screens/home.dart';
@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => PostProvider()),
+        ChangeNotifierProvider(create: (context) => WeatherProvider()),
       ],
       child: MaterialApp(
         theme: ThemeData(
