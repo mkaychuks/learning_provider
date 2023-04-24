@@ -14,7 +14,7 @@ Widget headerWidget({
           Text(
             city,
             style:
-                const TextStyle(fontSize: 24, height: 1, fontWeight: FontWeight.bold),
+                const TextStyle(fontSize: 30, height: 1, fontWeight: FontWeight.bold),
           ),
           const SizedBox(
             width: 4,
