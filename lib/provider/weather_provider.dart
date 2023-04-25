@@ -10,11 +10,13 @@ class WeatherProvider extends ChangeNotifier {
   double _longitude = 0.0;
   String _city = '';
   Weather? _weather;
+  bool _isLoading = true;
 
   double get latitude => _latitude;
   double get longitude => _longitude;
   String get city => _city;
   dynamic get weather => _weather;
+  bool get isLoading => _isLoading;
 
   /// a function we call to fetch our longitude and latitude
   Future getUserLocation() async {
@@ -48,7 +50,10 @@ class WeatherProvider extends ChangeNotifier {
         /// now calling the getAddress() function because
         /// it depends on the current value of the latitude and longitude..
         getAddress(value.latitude, value.longitude);
-        fetchWeatherDataFromAPI(value.latitude, value.longitude);
+        fetchWeatherDataFromAPI(value.latitude, value.longitude).then((_){
+          _isLoading = false;
+          notifyListeners();
+        });
         notifyListeners();
         print("$_latitude :::::::::::$_longitude");
       },
@@ -78,7 +83,8 @@ class WeatherProvider extends ChangeNotifier {
       http.Response response = await http.get(Uri.parse(uri));
       if (response.statusCode == 200) {
         _weather = weatherFromJson(response.body);
-        print("::::::::::::::::: ${_weather!}");
+        print(":::::::::::::::::::: $_weather");
+        _isLoading = false;
         notifyListeners();
       }
     } catch (e) {
