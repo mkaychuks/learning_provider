@@ -1,8 +1,13 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
 import 'package:learning_provider/model/weather.dart';
+import 'package:learning_provider/screens/home.dart';
+import 'package:learning_provider/screens/splash_screen.dart';
 import 'package:learning_provider/utils/commons.dart';
 
 class WeatherProvider extends ChangeNotifier {
@@ -19,14 +24,21 @@ class WeatherProvider extends ChangeNotifier {
   bool get isLoading => _isLoading;
 
   /// a function we call to fetch our longitude and latitude
-  Future getUserLocation() async {
+  Future getUserLocation(BuildContext? context) async {
     bool isserviceEnabled; // the location service availability.
     LocationPermission permission; // the nature of permission granted..
 
     // checking the service availability.
     isserviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!isserviceEnabled) {
-      return Future.error("Location services are disabled");
+      ScaffoldMessenger.of(context!).showSnackBar(
+        const SnackBar(
+          backgroundColor: Colors.blueAccent,
+          margin: EdgeInsets.all(8),
+          behavior: SnackBarBehavior.floating,
+          content: Text("Turn Location on and restart"),
+        ),
+      );
     }
 
     // checking the nature of the permission granted..
@@ -34,12 +46,26 @@ class WeatherProvider extends ChangeNotifier {
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {
-        return Future.error("Location permission are denied");
+        ScaffoldMessenger.of(context!).showSnackBar(
+        const SnackBar(
+          backgroundColor: Colors.blueAccent,
+          margin: EdgeInsets.all(8),
+          behavior: SnackBarBehavior.floating,
+          content: Text("Location permissions are denied"),
+        ),
+      );
       }
     }
 
     if (permission == LocationPermission.deniedForever) {
-      return Future.error("Location permission is permanently denied");
+      ScaffoldMessenger.of(context!).showSnackBar(
+        const SnackBar(
+          backgroundColor: Colors.blueAccent,
+          margin: EdgeInsets.all(8),
+          behavior: SnackBarBehavior.floating,
+          content: Text("Location permission is permanently denied"),
+        ),
+      );
     }
     // return the current position...
     return await Geolocator.getCurrentPosition().then(
@@ -50,12 +76,12 @@ class WeatherProvider extends ChangeNotifier {
         /// now calling the getAddress() function because
         /// it depends on the current value of the latitude and longitude..
         getAddress(value.latitude, value.longitude);
-        fetchWeatherDataFromAPI(value.latitude, value.longitude).then((_){
+        fetchWeatherDataFromAPI(value.latitude, value.longitude, context)
+            .then((_) {
           _isLoading = false;
           notifyListeners();
         });
         notifyListeners();
-        print("$_latitude :::::::::::$_longitude");
       },
     );
   }
@@ -75,7 +101,7 @@ class WeatherProvider extends ChangeNotifier {
   }
 
   /// the function that will call the WeatherAPI
-  Future fetchWeatherDataFromAPI(a,b) async {
+  Future fetchWeatherDataFromAPI(a, b, BuildContext? context) async {
     var uri =
         "https://api.weatherbit.io/v2.0/current?lat=$a&lon=$b&key=$apiKey";
 
@@ -83,12 +109,41 @@ class WeatherProvider extends ChangeNotifier {
       http.Response response = await http.get(Uri.parse(uri));
       if (response.statusCode == 200) {
         _weather = weatherFromJson(response.body);
-        print(":::::::::::::::::::: $_weather");
-        _isLoading = false;
-        notifyListeners();
+        if (_weather == null) {
+          ScaffoldMessenger.of(context!).showSnackBar(
+            const SnackBar(
+              backgroundColor: Colors.blueAccent,
+              margin: EdgeInsets.all(8),
+              behavior: SnackBarBehavior.floating,
+              content: Text("Internet connection is not stable"),
+            ),
+          );
+        } else {
+          Navigator.of(context!).pushAndRemoveUntil(
+              CupertinoPageRoute(
+                builder: (context) => const HomeScreen(),
+              ),
+              (route) => false);
+        }
       }
+    } on SocketException catch (_) {
+      ScaffoldMessenger.of(context!).showSnackBar(
+        const SnackBar(
+          backgroundColor: Colors.blueAccent,
+          margin: EdgeInsets.all(8),
+          behavior: SnackBarBehavior.floating,
+          content: Text("Internet connection is needed"),
+        ),
+      );
     } catch (e) {
-      print("::::::::::::::\$ERROR MESSAGE IS THIS ${e.toString()}");
+      ScaffoldMessenger.of(context!).showSnackBar(
+        const SnackBar(
+          backgroundColor: Colors.blueAccent,
+          margin: EdgeInsets.all(8),
+          behavior: SnackBarBehavior.floating,
+          content: Text("Something went wrong, please restart"),
+        ),
+      );
     }
   }
 }
