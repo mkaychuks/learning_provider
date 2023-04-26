@@ -33,7 +33,9 @@ class WeatherProvider extends ChangeNotifier {
     if (!isserviceEnabled) {
       ScaffoldMessenger.of(context!).showSnackBar(
         const SnackBar(
-          backgroundColor: Colors.blueAccent,
+          showCloseIcon: true,
+          closeIconColor: Colors.white,
+          backgroundColor: Colors.red,
           margin: EdgeInsets.all(8),
           behavior: SnackBarBehavior.floating,
           content: Text("Turn Location on and restart"),
@@ -47,20 +49,24 @@ class WeatherProvider extends ChangeNotifier {
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {
         ScaffoldMessenger.of(context!).showSnackBar(
-        const SnackBar(
-          backgroundColor: Colors.blueAccent,
-          margin: EdgeInsets.all(8),
-          behavior: SnackBarBehavior.floating,
-          content: Text("Location permissions are denied"),
-        ),
-      );
+          const SnackBar(
+            showCloseIcon: true,
+            closeIconColor: Colors.white,
+            backgroundColor: Colors.red,
+            margin: EdgeInsets.all(8),
+            behavior: SnackBarBehavior.floating,
+            content: Text("Location permissions are denied"),
+          ),
+        );
       }
     }
 
     if (permission == LocationPermission.deniedForever) {
       ScaffoldMessenger.of(context!).showSnackBar(
         const SnackBar(
-          backgroundColor: Colors.blueAccent,
+          showCloseIcon: true,
+          closeIconColor: Colors.white,
+          backgroundColor: Colors.red,
           margin: EdgeInsets.all(8),
           behavior: SnackBarBehavior.floating,
           content: Text("Location permission is permanently denied"),
@@ -112,7 +118,9 @@ class WeatherProvider extends ChangeNotifier {
         if (_weather == null) {
           ScaffoldMessenger.of(context!).showSnackBar(
             const SnackBar(
-              backgroundColor: Colors.blueAccent,
+              showCloseIcon: true,
+              closeIconColor: Colors.white,
+              backgroundColor: Colors.red,
               margin: EdgeInsets.all(8),
               behavior: SnackBarBehavior.floating,
               content: Text("Internet connection is not stable"),
@@ -129,7 +137,9 @@ class WeatherProvider extends ChangeNotifier {
     } on SocketException catch (_) {
       ScaffoldMessenger.of(context!).showSnackBar(
         const SnackBar(
-          backgroundColor: Colors.blueAccent,
+          showCloseIcon: true,
+          closeIconColor: Colors.white,
+          backgroundColor: Colors.red,
           margin: EdgeInsets.all(8),
           behavior: SnackBarBehavior.floating,
           content: Text("Internet connection is needed"),
@@ -138,7 +148,9 @@ class WeatherProvider extends ChangeNotifier {
     } catch (e) {
       ScaffoldMessenger.of(context!).showSnackBar(
         const SnackBar(
-          backgroundColor: Colors.blueAccent,
+          showCloseIcon: true,
+          closeIconColor: Colors.white,
+          backgroundColor: Colors.red,
           margin: EdgeInsets.all(8),
           behavior: SnackBarBehavior.floating,
           content: Text("Something went wrong, please restart"),
