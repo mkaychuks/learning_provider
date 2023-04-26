@@ -7,7 +7,6 @@ import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
 import 'package:learning_provider/model/weather.dart';
 import 'package:learning_provider/screens/home.dart';
-import 'package:learning_provider/screens/splash_screen.dart';
 import 'package:learning_provider/utils/commons.dart';
 
 class WeatherProvider extends ChangeNotifier {
