@@ -50,7 +50,6 @@ class Datum {
         required this.precip,
         required this.pres,
         required this.rh,
-        required this.slp,
         required this.snow,
         required this.solarRad,
         required this.sources,
@@ -90,7 +89,6 @@ class Datum {
     int precip;
     double pres;
     int rh;
-    double slp;
     int snow;
     double solarRad;
     List<String> sources;
@@ -129,8 +127,7 @@ class Datum {
         pod: json["pod"],
         precip: json["precip"],
         pres: json["pres"]?.toDouble(),
-        rh: json["rh"],
-        slp: json["slp"]?.toDouble(),
+        rh: json["rh"],// take note of this block of code....
         snow: json["snow"],
         solarRad: json["solar_rad"]?.toDouble(),
         sources: List<String>.from(json["sources"].map((x) => x)),
@@ -171,7 +168,6 @@ class Datum {
         "precip": precip,
         "pres": pres,
         "rh": rh,
-        "slp": slp,
         "snow": snow,
         "solar_rad": solarRad,
         "sources": List<dynamic>.from(sources.map((x) => x)),

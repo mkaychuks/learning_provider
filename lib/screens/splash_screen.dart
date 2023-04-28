@@ -26,8 +26,23 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Center(
-      child: Image.asset("assets/icons/clouds.png"),
-    ));
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Image.asset("assets/icons/clouds.png"),
+            const Text(
+              "LocuWeather",
+              style: TextStyle(
+                  letterSpacing: 1.5,
+                  height: 1,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 28),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
