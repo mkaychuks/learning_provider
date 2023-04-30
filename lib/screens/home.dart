@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:geocoding/geocoding.dart';
 import 'package:learning_provider/provider/weather_provider.dart';
 import 'package:learning_provider/widgets/details.dart';
 import 'package:learning_provider/widgets/header.dart';
