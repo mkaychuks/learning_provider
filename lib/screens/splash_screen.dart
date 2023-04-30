@@ -14,9 +14,8 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
 
-    Future.delayed(
-      const Duration(seconds: 2),
-      () {
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_) {
         Provider.of<WeatherProvider>(context, listen: false)
             .getUserLocation(context);
       },
